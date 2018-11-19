@@ -6,6 +6,7 @@ pipeline {
         DB_ENGINE    = 'sqlite'
         ORIGIN_ACCENTURE = 'https://gitlab.sdc.accenture.com/iberdrola/svn-git-piloto.git'
         ORIGIN_IBERDROLA = 'https://github.com/oscuroweb/spring-petclinic.git'
+        
     }
 
     stages {
@@ -31,15 +32,14 @@ pipeline {
         }
 
         stage('Copy to Iberdrola repository') {
+            environment {
+                CREDENTIALS_IBERDROLA = credentials('GitHub')
+            }
             steps {
                 sh "echo ${env.GIT_LOCAL_BRANCH}"
                 sh "git checkout ${env.GIT_LOCAL_BRANCH}"
                 sh "git remote remove origin"
                 sh "git remote add origin ${env.ORIGIN_IBERDROLA}"
-
-                userRemoteConfigs: [
-                    [ credentialsId: 'GitHub', url: "${env.ORIGIN_IBERDROLA}"]
-                ]
 
                 sh "git push origin ${env.GIT_LOCAL_BRANCH}"
             }
