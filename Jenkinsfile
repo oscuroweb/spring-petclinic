@@ -36,9 +36,11 @@ pipeline {
                 sh "git checkout ${env.GIT_LOCAL_BRANCH}"
                 sh "git remote remove origin"
                 sh "git remote add origin ${env.ORIGIN_IBERDROLA}"
-                git url: "${env.ORIGIN_IBERDROLA}",
-                    credentialsId: 'GitHub',
-                    branch: "${env.GIT_LOCAL_BRANCH}"
+
+                userRemoteConfigs: [
+                    [ credentialsId: 'GitHub', url: "${env.ORIGIN_IBERDROLA}"]
+                ]
+
                 sh "git push origin ${env.GIT_LOCAL_BRANCH}"
             }
         }
