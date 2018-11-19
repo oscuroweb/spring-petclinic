@@ -41,7 +41,7 @@ pipeline {
                 sh "git checkout ${env.GIT_LOCAL_BRANCH}"
                 sh "git remote remove origin"
                 withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh "git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@${env.ORIGIN_IBERDROLA}"
+                    sh "git remote add origin https://${GIT_USERNAME}:'${GIT_PASSWORD}'@${env.ORIGIN_IBERDROLA}"
                     sh "git push origin ${env.GIT_LOCAL_BRANCH}"
                 }
             }
