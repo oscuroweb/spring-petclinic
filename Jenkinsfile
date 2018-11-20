@@ -15,19 +15,19 @@ pipeline {
         
         stage('Compile') {
             steps {
-                sh "Compiling"
+                sh "echo Compiling"
             }
         }
         
         stage('Unit Tests') {
             steps {
-                sh "Testing"
+                sh "echo Testing"
             }
         }
         
         stage('Code Quality Tests') {
             steps {
-                sh "Quality test running"
+                sh "echo Quality test running"
             }
         }
 
@@ -37,7 +37,7 @@ pipeline {
             }
 
             steps {
-                sh "Copying to Iberdrola repository"
+                sh "echo Copying to Iberdrola repository"
                 sh "git checkout ${env.GIT_LOCAL_BRANCH}"
                 sh "git remote remove origin"
                 withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
