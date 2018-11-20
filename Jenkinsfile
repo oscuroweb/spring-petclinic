@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DISABLE_AUTH = 'true'
-        DB_ENGINE    = 'sqlite'
         ORIGIN_ACCENTURE = 'https://gitlab.sdc.accenture.com/iberdrola/svn-git-piloto.git'
         ORIGIN_IBERDROLA = 'github.com/oscuroweb/spring-petclinic.git'
         
@@ -17,21 +15,19 @@ pipeline {
         
         stage('Compile') {
             steps {
-                sh "echo ${env.GIT_LOCAL_BRANCH}"
-                sh "echo ${env.ORIGIN_ACCENTURE}"
-                sh "echo ${env.ORIGIN_IBERDROLA}"
+                sh "Compiling"
             }
         }
         
         stage('Unit Tests') {
             steps {
-                sh "echo ${env.GIT_LOCAL_BRANCH}"
+                sh "Testing"
             }
         }
         
         stage('Code Quality Tests') {
             steps {
-                sh "echo ${env.GIT_LOCAL_BRANCH}"
+                sh "Quality test running"
             }
         }
 
@@ -41,7 +37,7 @@ pipeline {
             }
 
             steps {
-                sh "echo ${env.GIT_LOCAL_BRANCH}"
+                sh "Copying to Iberdrola repository"
                 sh "git checkout ${env.GIT_LOCAL_BRANCH}"
                 sh "git remote remove origin"
                 withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
